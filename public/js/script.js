@@ -5,12 +5,8 @@ let hiHats = new Array(16).fill(false);
 let rideCymbals = new Array(16).fill(false);
 const drumsList = ['kicks', 'snares', 'hiHats', 'rideCymbals'];
 
-// helper function to reference array 
+/* helper function to reference array */
 function referenceArray(stringName) {
-    if (!stringName in drumsList) {
-        return null;
-    }
-
     switch(stringName) { 
         case 'kicks':
             return kicks;
@@ -62,13 +58,15 @@ function clear(arrayName) {
 
 /* invert() - takes an array name string and flips the boolean value of all elements in the correct array. */
 function invert(arrayName) {
+    arrayName = referenceArray(arrayName);
+
     // input validation 
     if(!arrayName) {
-        // no function argument 
-        return;
+        return 'Error: missing or invalid arrayName.';
     }
 
-    for(let i = 0; i < arrayName.length - 1; i++) {
+    // flip all boolean values in the array 
+    for(let i = 0; i < arrayName.length; i++) {
         if(arrayName[i]) {
             arrayName[i] = false;
         } else {
