@@ -15,22 +15,26 @@ const presetHandler = (httpVerb, arrayIndex, newPresetArray) => {
     if(httpVerb !== 'GET' && httpVerb !== 'PUT') {
         result.push(400);
     } 
-    
-    // handle GET requests 
-    if (httpVerb === 'GET') {
-        // validate arrayIndex
-        if(!isArrayIndexValid(arrayIndex)) {
-            result.push(404);
-        } else {
-            result.push(200);
-        }
 
-        // handle successful GET requests 
-        result.push(presets);
+    // validate arrayIndex
+    if(!isArrayIndexValid(arrayIndex)) {
+        result.push(404);
+    } else {
+        result.push(200);
     }
     
-    // validating arrayIndex 
+    // handle GET requests 
+    if (httpVerb === 'GET' && result[0] === 200) {
+        // handle successful GET requests 
+        result.push(presets[arrayIndex]);
+    }
 
+    // handle PUT requests 
+    if(httpVerb === 'PUT' && result[0] === 200) {
+        // handle successful PUT request 
+        presets.splice(arrayIndex, 0, newPresetArray);
+        result.push(newPresetArray);
+    }  
 
     // returns array 
     // console.log(result);
@@ -47,7 +51,6 @@ function isArrayIndexValid(arrayIndex) {
         return true;
     }
 }   
-
 
 // Leave this line so that your presetHandler function can be used elsewhere:
 module.exports = presetHandler;
