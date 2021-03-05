@@ -74,3 +74,27 @@ function invert(arrayName) {
         }
     }
 }
+
+/* Bonus: getNeighborPads() - return an array of neighbors, each in the form [xValue, yValue] */
+// Neighbors are the squares immediately to the left, right, above, and below a grid position. 
+function getNeighborPads(x, y, size) {
+    let result = [];
+
+    // return empty array when called with x or y arg outside the size range 
+    if(x >= size || y >= size || x < 0 || y < 0 || size < 1) {
+        return result;
+    }
+
+    // push neighboring squares into result array 
+    result.push([x + 1, y]);
+    result.push ([x - 1, y]);
+    result.push([x, y + 1]);
+    result.push([x, y - 1]);
+
+    // filter out neighboring pads that go out of bounds 
+    return result.filter((neighbor) => {
+        return neighbor.every((value) => {
+            return value >= 0 && value < size;
+        })
+    })
+}
